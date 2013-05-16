@@ -1,3 +1,6 @@
-[submodule "vagrant/chef/cookbooks/phpunit"]
-	path = vagrant/chef/cookbooks/phpunit
-	url = git@github.com:msonnabaum/chef-phpunit.git
+[submodule "vagrant/chef/cookbooks/mysql"]
+	path = vagrant/chef/cookbooks/mysql
+	url = https://github.com/opscode-cookbooks/mysql.git
+[submodule "vagrant/chef/cookbooks/openssl"]
+	path = vagrant/chef/cookbooks/openssl
+	url = https://github.com/opscode-cookbooks/openssl.git
