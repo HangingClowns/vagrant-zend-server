@@ -22,6 +22,10 @@ cookbook_file "/etc/profile.d/zend-server.sh" do
   mode "0644"
 end
 
+bash "source new path" do
+  code "source /etc/profile"
+end
+
 cookbook_file "/etc/apache2/sites-available/app.conf" do
   source "app.conf"
   group "root"
