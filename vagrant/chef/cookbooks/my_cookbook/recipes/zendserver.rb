@@ -13,17 +13,22 @@ execute "update apt" do
 end
 
 package "zend-server-php-5.4"
+package "php-5.4-pcntl-zend-server"
 package "apache2-mpm-itk"
+
+bash "reload path" do
+  code <<-EOC
+    . /etc/profile
+  EOC
+  action :nothing
+end
 
 cookbook_file "/etc/profile.d/zend-server.sh" do
   source "zend-server.sh"
   group "root"
   owner "root"
   mode "0644"
-end
-
-bash "source new path" do
-  code "source /etc/profile"
+  notifies :run, 'bash[reload path]', :immediately
 end
 
 cookbook_file "/etc/apache2/sites-available/app.conf" do
@@ -38,6 +43,12 @@ end
 
 execute "enable app site" do
   command "a2ensite app.conf"
+end
+
+execute "enable pcntl" do
+  command <<-EOC 
+    sed -i 's,;\\(extension=pcntl.so\\),\\1,g' /usr/local/zend/etc/conf.d/pcntl.ini
+  EOC
 end
 
 service "apache2" do
